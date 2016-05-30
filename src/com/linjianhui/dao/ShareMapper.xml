@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.linjianhui.dao.ShareMapper">
+	<insert id="save" parameterType="com.linjianhui.entity.Share">
+		insert into cn_share values(
+			#{cn_share_id},
+			#{cn_share_title},
+			#{cn_share_body},
+			#{cn_note_id}
+		)
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteByNoteId" parameterType="string">
+		delete from cn_share where cn_note_id=#{noteID}
+	</delete>
+	<select id="findByPage" resultType="com.linjianhui.entity.Share">
+		select * from cn_share where cn_share_title
+		like CONCAT('%',#{0},'%') order by cn_share_title
+		limit #{1},#{2}
+	</select>
+<!-- <select id="findByPage">
+		select * from cn_share where cn_share_title
+		like '%'||#{0}||'%' order by cn_share_title
+		limit #{1},#{2}
+	</select> -->	
+</mapper>

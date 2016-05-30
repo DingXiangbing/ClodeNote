@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.linjianhui.dao.UserMapper">
+
+
+<!-- findByName -->
+<!-- 如果一个方法只有一个参数，那么#{}中的参数可以随便写。因为只有一个参数，没得选择，一般为了阅读方便，我们会写成接口中声明的参数名 -->
+<select id="findByName" parameterType="string" resultType="com.linjianhui.entity.User">
+	select * from cn_user where cn_user_name=#{userName}
+</select>
+<!-- save -->
+<!-- 注意传入的参数是实体对象(Map)，在#{}中需要些对应的属性名 (Key)，表示引用对象(Map)中的某个值-->
+<insert id="save" parameterType="com.linjianhui.entity.User">
+	insert into cn_user values(
+		#{cn_user_id},#{cn_user_name},#{cn_user_password},#{cn_user_token},#{cn_user_desc}
+	)
+</insert>
+<update id="changepwd" parameterType="com.linjianhui.entity.User">
+	update cn_user set
+	cn_user_password=#{cn_user_password},
+	cn_user_token=#{cn_user_token},
+	cn_user_desc=#{cn_user_desc}
+	where cn_user_id=#{cn_user_id}
+</update>
+
+
+
+</mapper>

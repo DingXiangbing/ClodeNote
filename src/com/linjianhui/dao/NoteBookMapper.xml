@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.linjianhui.dao.NoteBookMapper">
+<!-- save -->
+<!-- 注意传入的参数是实体对象(Map)，在#{}中需要些对应的属性名 (Key)，表示引用对象(Map)中的某个值-->
+<insert id="save" parameterType="com.linjianhui.entity.NoteBook">
+	insert into cn_notebook values(
+		#{cn_notebook_id},#{cn_user_id},#{cn_notebook_type_id},
+		#{cn_notebook_name},#{cn_notebook_desc},#{cn_notebook_createtime}
+	)
+</insert>
+<select id="findNormal" parameterType="string" resultType="com.linjianhui.entity.NoteBook">
+	select * from cn_notebook where cn_user_id=#{userid} 
+	and cn_notebook_type_id='5' order by cn_notebook_createtime
+</select>
+<select id="findSpecial" parameterType="string" resultType="com.linjianhui.entity.NoteBook">
+	select * from cn_notebook where cn_user_id=#{userid}
+	 and cn_notebook_type_id in('1','2','3','4')
+</select>
+<update id="rename" parameterType="com.linjianhui.entity.NoteBook">
+	update cn_notebook set 
+	cn_notebook_name=#{cn_notebook_name},
+	cn_notebook_desc=#{cn_notebook_desc},
+	cn_user_id=#{cn_user_id},
+	cn_notebook_type_id=#{cn_notebook_type_id}
+	where cn_notebook_id=#{cn_notebook_id}
+</update>
+<delete id="delete" parameterType="string">
+	delete from cn_notebook where cn_notebook_id=#{bookId}
+</delete>
+</mapper>
